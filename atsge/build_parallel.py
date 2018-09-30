@@ -44,7 +44,6 @@ def build_parallel_dropbox(parallel_mode, user_modules,
         dispatcher_class = concurrently.HTCondorJobSubmitter
         dropbox_options = dict()
     elif parallel_mode == 'sge':
-        dispatcher_options = dict()
         dispatcher_class = SGEJobSubmitter
         dropbox_options = dict(sleep = 30)
     else:
