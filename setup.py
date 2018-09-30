@@ -17,7 +17,7 @@ setuptools.setup(
     download_url="https://github.com/shane-breeze/atsge/archive/0.1.1.tar.gz",
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
-    classifiers=(
+    classifiers=[
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
@@ -25,5 +25,5 @@ setuptools.setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Utilities",
         "Development Status :: 3 - Alpha",
-    ),
+    ],
 )
