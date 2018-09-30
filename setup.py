@@ -29,4 +29,4 @@ setuptools.setup(
         "Topic :: Utilities",
         "Development Status :: 3 - Alpha",
     ),
-]
+)
