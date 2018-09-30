@@ -6,7 +6,7 @@ def get_long_description():
     return long_description
 
 def get_requirements():
-    with open("requirements", 'r') as fh:
+    with open("requirements.txt", 'r') as fh:
         requirements = fh.read().splitlines()
     return requirements
 
