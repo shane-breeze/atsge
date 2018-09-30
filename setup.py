@@ -18,6 +18,7 @@ setuptools.setup(
     url="https://github.com/shane-breeze/atsge",
     packages=setuptools.find_packages(),
     install_requires=requirements,
+    download_url="https://github.com/shane-breeze/atsge/archive/0.1.0.tar.gz",
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=(
