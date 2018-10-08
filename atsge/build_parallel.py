@@ -9,7 +9,7 @@ from .SGEJobSubmitter import SGEJobSubmitter
 
 ##__________________________________________________________________||
 def build_parallel(parallel_mode, quiet=True, processes=4, user_modules=[ ],
-                   dispatcher_options=[ ]):
+                   dispatcher_options={}, dropbox_options={}):
 
     dispatchers = ('subprocess', 'htcondor', 'sge')
     parallel_modes = ('multiprocessing', ) + dispatchers
@@ -29,26 +29,24 @@ def build_parallel(parallel_mode, quiet=True, processes=4, user_modules=[ ],
         parallel_mode=parallel_mode,
         user_modules=user_modules,
         dispatcher_options=dispatcher_options,
+        dropbox_options=dropbox_options,
     )
 
 ##__________________________________________________________________||
 def build_parallel_dropbox(parallel_mode, user_modules,
-                           dispatcher_options=[ ]):
+                           dispatcher_options={},
+                           dropbox_options={}):
     workingarea_topdir = '_ccsp_temp'
     python_modules = set(user_modules)
     python_modules.add('alphatwirl')
     workingarea_options = dict(topdir=workingarea_topdir, python_modules=python_modules)
 
     if parallel_mode == 'htcondor':
-        dispatcher_options = dict(job_desc_extra=dispatcher_options)
         dispatcher_class = concurrently.HTCondorJobSubmitter
-        dropbox_options = dict()
     elif parallel_mode == 'sge':
         dispatcher_class = SGEJobSubmitter
     else:
-        dispatcher_options = dict()
         dispatcher_class = concurrently.SubprocessRunner
-        dropbox_options = dict()
 
     return _build_parallel_dropbox_(
         workingarea_options, dropbox_options, dispatcher_class, dispatcher_options
