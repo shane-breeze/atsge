@@ -1,7 +1,8 @@
 import sys
 import logging
 
-from alphatwirl import concurrently, progressbar
+from atpbar import atpbar
+from alphatwirl import concurrently
 from alphatwirl.misc.deprecation import _deprecated
 
 from alphatwirl.parallel import Parallel
@@ -39,6 +40,7 @@ def build_parallel_dropbox(parallel_mode, user_modules,
     workingarea_topdir = '_ccsp_temp'
     python_modules = set(user_modules)
     python_modules.add('alphatwirl')
+    python_modules.add('atpbar')
     workingarea_options = dict(topdir=workingarea_topdir, python_modules=python_modules)
 
     if parallel_mode == 'htcondor':
@@ -63,29 +65,17 @@ def _build_parallel_dropbox_(workingarea_options, dropbox_options,
     dropbox = concurrently.TaskPackageDropbox(**dropbox_options)
     communicationChannel = concurrently.CommunicationChannel(dropbox=dropbox)
 
-    progressMonitor = progressbar.NullProgressMonitor()
-
-    return Parallel(progressMonitor, communicationChannel, workingarea)
+    return Parallel(None, communicationChannel, workingarea)
 
 ##__________________________________________________________________||
 def _build_parallel_multiprocessing(quiet, processes):
 
-    if quiet:
-        progressBar = None
-    elif sys.stdout.isatty():
-        progressBar = progressbar.ProgressBar()
-    else:
-        progressBar = progressbar.ProgressPrint()
-
     if processes is None or processes == 0:
-        progressMonitor = progressbar.NullProgressMonitor() if quiet else progressbar.ProgressMonitor(presentation = progressBar)
-        communicationChannel = concurrently.CommunicationChannel0()
+        communicationChannel = concurrently.CommunicationChannel0(progressbar=not quiet)
     else:
-        progressMonitor = progressbar.NullProgressMonitor() if quiet else progressbar.BProgressMonitor(presentation = progressBar)
-        dropbox = concurrently.MultiprocessingDropbox(processes, progressMonitor)
-        communicationChannel = concurrently.CommunicationChannel(dropbox = dropbox)
-
-    return Parallel(progressMonitor, communicationChannel)
+        dropbox = concurrently.MultiprocessingDropbox(processes, progressbar=not quiet)
+        communicationChannel = concurrently.CommunicationChannel(dropbox=dropbox)
+    return Parallel(None, communicationChannel)
 
 ##__________________________________________________________________||
 
