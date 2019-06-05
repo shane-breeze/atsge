@@ -3,7 +3,6 @@ import logging
 
 from atpbar import atpbar
 from alphatwirl import concurrently
-from .WorkingArea import WorkingArea
 from alphatwirl.misc.deprecation import _deprecated
 
 from alphatwirl.parallel import Parallel
@@ -58,7 +57,7 @@ def build_parallel_dropbox(parallel_mode, user_modules,
 def _build_parallel_dropbox_(workingarea_options, dropbox_options,
                              dispatcher_class, dispatcher_options):
 
-    workingarea = WorkingArea(**workingarea_options)
+    workingarea = concurrently.WorkingArea(**workingarea_options)
 
     dispatcher = dispatcher_class(**dispatcher_options)
 
