@@ -17,7 +17,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 import alphatwirl
-from alphatwirl.concurrently.exec_util import try_executing_until_succeed, compose_shortened_command_for_logging
+from alphatwirl.concurrently.condor.exec_util import try_executing_until_succeed, compose_shortened_command_for_logging
 
 ##__________________________________________________________________||
 SGE_JOBSTATUS = {
@@ -80,7 +80,7 @@ class SGEJobSubmitter(object):
         cwd = os.getcwd()
         os.chdir(workingArea.path)
 
-        package_paths = [workingArea.package_path(i) for i in package_indices]
+        package_paths = [workingArea.package_relpath(i) for i in package_indices]
         resultdir_basenames = [os.path.splitext(p)[0] for p in package_paths]
         resultdir_basenames = [os.path.splitext(n)[0] for n in resultdir_basenames]
         resultdirs = [os.path.join('results', n) for n in resultdir_basenames]

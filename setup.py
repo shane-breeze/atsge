@@ -5,9 +5,14 @@ def get_long_description():
         long_description = fh.read()
     return long_description
 
+def get_requirements():
+    with open("requirements.txt", 'r') as fh:
+        reqs = fh.read().splitlines()
+    return reqs
+
 setuptools.setup(
     name="atsge",
-    version="0.1.10",
+    version="0.1.11",
     author="Shane Breeze",
     author_email="sdb15@ic.ac.uk",
     scripts=[],
@@ -16,8 +21,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/shane-breeze/atsge",
     packages=setuptools.find_packages(),
-    download_url="https://github.com/shane-breeze/atsge/archive/0.1.10.tar.gz",
-    install_requires=["alphatwirl>=0.20.1"],
+    download_url="https://github.com/shane-breeze/atsge/archive/0.1.11.tar.gz",
+    install_requires=get_requirements(),
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
     classifiers=[
