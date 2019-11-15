@@ -137,6 +137,7 @@ class SGEJobSubmitter(object):
             job_desc.split(),
             stdout = subprocess.PIPE,
             stderr = subprocess.PIPE,
+            universal_newlines = True,
         )
         stdout, stderr = proc.communicate()
 
@@ -228,7 +229,8 @@ class SGEJobSubmitter(object):
             proc = subprocess.Popen(
                 procargs,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE
+                stderr=subprocess.PIPE,
+                universal_newlines=True,
             )
             stdout, stderr = proc.communicate()
 
